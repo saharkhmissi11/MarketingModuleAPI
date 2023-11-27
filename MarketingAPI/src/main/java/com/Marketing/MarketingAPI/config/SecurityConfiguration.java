@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
@@ -20,7 +21,7 @@ import java.util.Arrays;
 @Configuration
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true) // Enable method-level security
-
+@EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfiguration {
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
@@ -30,7 +31,9 @@ public class SecurityConfiguration extends WebSecurityConfiguration {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeRequests()
-                .requestMatchers("/api/category/**").permitAll()
+                .requestMatchers("/api/field/**").permitAll()
+                .requestMatchers("/api/client/**").permitAll()
+                .requestMatchers("/api/campaign/**").permitAll()
                 .requestMatchers("/api/user/**").permitAll()
                 .requestMatchers("/api/product/**").permitAll()
                 .requestMatchers("/api/email/**").permitAll()

@@ -3,6 +3,7 @@ package com.Marketing.MarketingAPI.services;
 import com.Marketing.MarketingAPI.DTO.FieldOfActivityDTO;
 import com.Marketing.MarketingAPI.models.FieldOfActivity;
 import com.Marketing.MarketingAPI.repositories.FieldOfActivityRepo;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -15,6 +16,7 @@ import java.util.Optional;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Transactional
 public class FieldOfActivityService {
     private  final FieldOfActivityRepo fieldOfActivityRepo;
     private final ModelMapper modelMapper ;
@@ -26,8 +28,8 @@ public class FieldOfActivityService {
         Optional<FieldOfActivity> fieldOfActivity=fieldOfActivityRepo.findById(id);
         return fieldOfActivity.map(u->modelMapper.map(u, FieldOfActivityDTO.class));
     }
-    public FieldOfActivityDTO addField (FieldOfActivityDTO categoryDto){
-        FieldOfActivity field= modelMapper.map(categoryDto,FieldOfActivity.class);
+    public FieldOfActivityDTO addField (FieldOfActivityDTO fieldDto){
+        FieldOfActivity field= modelMapper.map(fieldDto,FieldOfActivity.class);
         FieldOfActivity savedField = fieldOfActivityRepo.save(field);
         return modelMapper.map(savedField,FieldOfActivityDTO.class);
     }

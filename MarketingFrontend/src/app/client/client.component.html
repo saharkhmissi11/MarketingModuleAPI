@@ -1,0 +1,132 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<div class="content-body">
+    <div class="container-fluid mh-auto">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body px-0">
+                        <div class="table-responsive">
+                            &nbsp;&nbsp;&nbsp; <button type="button" class="btn btn-success" (click)="toggleForm()"><i
+                                    class='fa fa-plus'></i> Add</button>
+                            <table class="table table-sm mb-0 table-striped student-tbl">
+                                <thead>
+                                    <tr>
+                                        <th class="custom-column">Client Id</th>
+                                        <th class="custom-column">Name</th>
+                                        <th class="custom-column">Email</th>
+                                        <th class="custom-column">Phone</th>
+                                        <th class="custom-column">County</th>
+                                        <th class="custom-column">Gender</th>
+                                        <th class="custom-column">Field</th>
+                                        <th class="custom-column">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="customers">
+                                    <tr *ngFor="let c of clients">
+                                        <td>{{c.id}}</td>
+                                        <td>{{c.firstName}}&nbsp;{{c.lastName}}</td>
+                                        <td>{{c.email}}</td>
+                                        <td>{{c.phone}}</td>
+                                        <td>{{c.country}}</td>
+                                        <td>{{c.gender}}</td>
+                                        <td>{{c.field_id}}</td>
+                                        <td>
+                                            <a class="btn btn-primary shadow btn-xs sharp me-1"><i
+                                                    class='fa fa-pencil'></i></a>
+                                            <a class="btn btn-secondary shadow btn-xs sharp me-1"><i
+                                                    class='fa fa-recycle'></i></a>
+                                            <a class="btn btn-danger shadow btn-xs sharp"><i
+                                                    class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- form -->
+                            <div class="modal" [ngClass]="{ 'show': showForm }">
+                                <div class="col-12">
+                                    <form class="card" #addForm="ngForm" action="" id="wizard">
+                                        <div class="card-header">
+                                            <h4 class="card-title">Add Client</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row form-material">
+                                                <div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
+                                                    <label class="form-label">Firstname<span
+                                                            style="color: rgb(180, 16, 16); font-size: 10px; font-style: italic;">*</span></label>
+                                                    <input type="text" class="form-control" placeholder="Firstname"
+                                                        id="firstname" [(ngModel)]="client.firstName" required>
+                                                </div>
+                                                <div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
+                                                    <label class="form-label">Lastname<span
+                                                            style="color: rgb(180, 16, 16); font-size: 10px; font-style: italic;">*</span></label>
+                                                    <input type="text" class="form-control" placeholder="Lastname"
+                                                        id="lastname" [(ngModel)]="client.lastName" required>
+                                                </div>
+                                                <div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
+                                                    <label class="form-label">Email<span
+                                                            style="color: rgb(180, 16, 16); font-size: 10px; font-style: italic;">*</span></label>
+                                                    <input type="text" class="form-control" placeholder="Email"
+                                                        id="email" [(ngModel)]="client.email" required>
+                                                </div>
+                                                <div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
+                                                    <label class="form-label">Phone<span
+                                                            style="color: rgb(180, 16, 16); font-size: 10px; font-style: italic;">*</span></label>
+                                                    <input type="text" class="form-control" placeholder="Phone" name=phone
+                                                        id="phone" [(ngModel)]="client.phone" required>
+                                                </div>
+                                                <div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
+                                                    <label class="form-label">Field of activity<span
+                                                            style="color: rgb(180, 16, 16); font-size: 10px; font-style: italic;">*</span></label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Field of activity" id="field_id" name="field_id"
+                                                        [(ngModel)]="client.field_id" required>
+                                                </div>
+                                                <div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
+                                                    <label class="form-label">Age<span
+                                                            style="color: rgb(180, 16, 16); font-size: 10px; font-style: italic;">*</span></label>
+                                                    <input type="text" class="form-control" placeholder="Age" id="age" name="age"
+                                                        [(ngModel)]="client.age" required>
+                                                </div>
+                                                <div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
+                                                    <label class="form-label">Country<span
+                                                            style="color: rgb(180, 16, 16); font-size: 10px; font-style: italic;">*</span></label>
+                                                    <input type="text" class="form-control" placeholder="Country" id="country" name="country"
+                                                        [(ngModel)]="client.country" required>
+                                                </div>
+                                                <div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
+                                                    <label class="form-label">Gender<span
+                                                        style="color: rgb(180, 16, 16); font-size: 10px; font-style: italic;">*</span></label> &nbsp;&nbsp;
+                                                    <input title="i" type="radio" name="optionsRadios" id="male"
+                                                        name="gender" [(ngModel)]="client.gender" value="Male"
+                                                        checked="">Male &nbsp;&nbsp;
+                                                    <input title="i" type="radio" name="optionsRadios" id="female"
+                                                        name="gender" [(ngModel)]="client.gender"
+                                                        value="Female">Female&nbsp;&nbsp;
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <button type="button" class="btn btn-warning"
+                                                            [disabled]="!addForm.valid" (click)="addClient(addForm)">
+                                                            <i class="fa fa-plus"></i> Add
+                                                        </button>
+                                                    </div>
+                                                    <div class="col">
+                                                        <button type="button" class="btn btn-danger"
+                                                            (click)="CloseForm(addForm)">
+                                                            <i class="fa fa-close"></i> Close
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

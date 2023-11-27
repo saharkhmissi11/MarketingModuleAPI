@@ -1,22 +1,16 @@
 package com.Marketing.MarketingAPI.models;
-
 import jakarta.persistence.*;
 import lombok.*;
 
 @Data
 @Builder
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Product")
 @Entity
-
 public class Product {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "name")
     private String name;
-    @Column(name = "price")
     private double price ;
-
 }

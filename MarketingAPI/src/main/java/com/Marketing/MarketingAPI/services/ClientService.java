@@ -28,14 +28,24 @@ public class ClientService {
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
+    public ClientDTO getClientById(Long id) {
+        Client client = clientRepo.findById(id).get();
+        return convertToDto(client);
+    }
     public List<ClientDTO> getClientsByGender(Gender gender) {
-        Optional<Client> clients = clientRepo.findByGender(gender);
+        List<Client> clients = clientRepo.findByGender(gender);
+        return clients.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+    public List<ClientDTO> getClientsByField(FieldOfActivity field) {
+        List<Client> clients = clientRepo.findByField(field);
         return clients.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
     public List<ClientDTO> getClientsByCountry(String country) {
-        Optional<Client> clients = clientRepo.findByCountry(country);
+        List<Client> clients = clientRepo.findByCountry(country);
         return clients.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
