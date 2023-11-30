@@ -5,6 +5,7 @@ import { CampaignComponent } from './campaign/campaign.component';
 import { ClientComponent } from './client/client.component';
 import { HeaderComponent } from './header/header.component';
 import { ProductComponent } from './product/product.component';
+import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path:"clients",component:ClientComponent},
   {path:"products",component:ProductComponent},
   {path:"campaigns",component:CampaignComponent},
+  {path:"questionnaire/:companyId",component:QuestionnaireComponent},
   {path:"campaign-targets",component:CampaignTargetsComponent}
 ];
 

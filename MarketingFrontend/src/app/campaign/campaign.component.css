@@ -1,0 +1,11 @@
+/* Styling for small button */
+.btn-primary.small {
+    padding: 5px 10px; /* Adjust padding for the smaller button */
+    font-size: 12px; /* Adjust font size for the smaller button */
+    transition: all 0.3s ease; /* Add transition effect for size change */
+  }
+  
+  .fa-spinner {
+    font-size: inherit; /* Make sure spinner size inherits from the parent */
+  }
+  

@@ -1,5 +1,6 @@
-<app-header></app-header>
 <app-sidebar></app-sidebar>
+<app-header></app-header>
+
 <div class="content-body">
     <div class="container-fluid mh-auto">
         <div class="row">
@@ -20,18 +21,25 @@
                                     </tr>
                                 </thead>
                                 <tbody id="customers">
-                                    <tr *ngFor="let c of campaigns">
+                                    <tr *ngFor="let c of campaigns; let i = index">
                                         <td>{{c.id}}</td>
                                         <td>{{c.name}}</td>
                                         <td>{{c.description}}</td>
                                         <td>{{c.product_id}}</td>
                                         <td>
-                                            <a class="btn btn-primary shadow btn-xs sharp me-1" (click)="edit(c.id)"><i
-                                                    class='fa fa-pencil'></i></a>
-                                            <a class="btn btn-secondary shadow btn-xs sharp me-1"><i
-                                                    class='fa fa-recycle'></i></a>
-                                            <a class="btn btn-danger shadow btn-xs sharp"><i
-                                                    class="fa fa-trash"></i></a>
+                                            <button *ngIf="!isLaunched[i]" class="btn btn-success shadow sharp"
+                                                (click)="launch(c.id, i)" [disabled]="isRequesting[i]">
+                                                <i *ngIf="isRequesting[i]" class="fa fa-spinner fa-spin"></i>
+                                                <!-- Spinner icon -->
+                                                <i *ngIf="!isRequesting[i] && !isLaunched[i]" class="fa fa-rocket"></i>
+                                                <!-- Rocket icon -->
+                                                <span *ngIf="!isRequesting[i] && !isLaunched[i]">Launch</span>
+                                                <!-- Button text -->
+                                            </button>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span *ngIf="isLaunched[i]" style="width: 30px;" class="fa fa-check text-success"></span>
+                                            <!-- Display green check icon when launched -->
+
+
                                         </td>
                                     </tr>
                                 </tbody>
@@ -65,26 +73,30 @@
                                                 </div>
                                                 <div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
                                                     <label class="form-label">End Date</label>
-                                                    <input type="date" class="form-control" id="endDate" [(ngModel)]="campaign.endDate" name="endDate">
+                                                    <input type="date" class="form-control" id="endDate"
+                                                        [(ngModel)]="campaign.endDate" name="endDate">
                                                 </div>
                                                 <div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
                                                     <label class="form-label">Select Product</label>
-                                                    <select class="form-select" [(ngModel)]="campaign.product_id" name="selectedProductId"  >
+                                                    <select class="form-select" [(ngModel)]="campaign.product_id"
+                                                        name="selectedProductId">
                                                         <option disabled selected value="">Select Product </option>
-                                                        <option *ngFor="let product of products" [value]="product.id">{{ product.name }}</option>
+                                                        <option *ngFor="let product of products" [value]="product.id">{{
+                                                            product.name }}</option>
                                                     </select>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
                                                         <button type="button" class="btn btn-warning"
-                                                            [disabled]="!addForm.valid" (click)="addCampaign(addForm)" routerLink="/campaign-targets">
-                                                            <i class="fa fa-user"></i> Add clients
+                                                            [disabled]="!addForm.valid" (click)="addCampaign(addForm)"
+                                                            routerLink="/campaign-targets">
+                                                            <i class="fa fa-user"></i> OK
                                                         </button>
                                                     </div>
                                                     <div class="col">
-                                                        <button type="button" class="btn btn-danger" 
+                                                        <button type="button" class="btn btn-danger"
                                                             (click)="CloseForm(addForm)">
-                                                            <i class="fa fa-close"></i>  Close
+                                                            <i class="fa fa-close"></i> Close
                                                         </button>
                                                     </div>
                                                 </div>

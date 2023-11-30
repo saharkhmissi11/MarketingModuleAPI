@@ -13,4 +13,9 @@ public class EmailRequest {
     private String toEmail;
     private String subject;
     private String body;
+    private Long campaignId;
+
+    public void setCampaignId(Long campaignId) {
+        this.campaignId = campaignId;
+    }
 }

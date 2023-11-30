@@ -33,6 +33,7 @@ public class SecurityConfiguration extends WebSecurityConfiguration {
                 .authorizeRequests()
                 .requestMatchers("/api/field/**").permitAll()
                 .requestMatchers("/api/client/**").permitAll()
+                .requestMatchers("/api/questionnaire/**").permitAll()
                 .requestMatchers("/api/campaign/**").permitAll()
                 .requestMatchers("/api/user/**").permitAll()
                 .requestMatchers("/api/product/**").permitAll()

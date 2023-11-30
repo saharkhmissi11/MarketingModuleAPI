@@ -11,6 +11,7 @@ import { ClientComponent } from './client/client.component';
 import { ProductComponent } from './product/product.component';
 import { CampaignComponent } from './campaign/campaign.component';
 import { CampaignTargetsComponent } from './campaign-targets/campaign-targets.component';
+import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { CampaignTargetsComponent } from './campaign-targets/campaign-targets.co
     ClientComponent,
     ProductComponent,
     CampaignComponent,
-    CampaignTargetsComponent
+    CampaignTargetsComponent,
+    QuestionnaireComponent
   ],
   imports: [
     BrowserModule,

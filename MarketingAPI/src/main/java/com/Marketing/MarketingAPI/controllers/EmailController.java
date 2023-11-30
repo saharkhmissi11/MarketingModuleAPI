@@ -18,7 +18,8 @@ public class EmailController {
             String to = emailRequest.getToEmail();
             String subject = emailRequest.getSubject();
             String body = emailRequest.getBody();
-            emailService.sendEmail(to, subject, body);
+            Long campaignId=emailRequest.getCampaignId();
+            emailService.sendEmail(to, campaignId,subject, body);
             return ResponseEntity.ok(emailRequest);
         } catch (MessagingException e) {
             // Log the exception or return an error response

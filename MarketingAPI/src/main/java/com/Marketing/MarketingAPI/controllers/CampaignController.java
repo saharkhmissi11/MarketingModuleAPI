@@ -4,6 +4,7 @@ import com.Marketing.MarketingAPI.DTO.CampaignDTO;
 import com.Marketing.MarketingAPI.DTO.ClientDTO;
 import com.Marketing.MarketingAPI.models.Client;
 import com.Marketing.MarketingAPI.services.CampaignService;
+import com.Marketing.MarketingAPI.services.QuestionnaireService;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import java.util.List;
 @RequestMapping("/api/campaign")
 public class CampaignController {
     public final CampaignService campaignService;
+    //private final QuestionnaireService questionnaireService;
     @GetMapping("/all")
     public ResponseEntity<List<CampaignDTO>> getAllCampaigns(){
         return new ResponseEntity<>(campaignService.getAllCampaigns(), HttpStatus.OK);

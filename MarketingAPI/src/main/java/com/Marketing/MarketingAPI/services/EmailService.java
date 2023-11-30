@@ -20,7 +20,7 @@ public class EmailService {
     private final EmailRepository emailRepository;
     @Autowired
     private final JavaMailSender javaMailSender;
-    public void sendEmail(String to, String subject, String body) throws MessagingException {
+    public void sendEmail(String to, Long campaignId, String subject, String body) throws MessagingException {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         helper.setTo(to);
@@ -31,22 +31,22 @@ public class EmailService {
         Email email = new Email();
         email.setToEmail(to);
         email.setSubject(subject);
-        email.setBody(body);
+        email.setBody("http://localhost:8080/api/questionnaire/campaign/"+String.valueOf(campaignId)+" "+ body);
         emailRepository.save(email);
     }
-    public void sendEmailToPeople(List<String> toMails, String subject, String body)throws MessagingException{
+    public void sendEmailToPeople(List<String> toMails,Long campaignId ,String subject, String body)throws MessagingException{
         for (String to:toMails){
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setTo(to);
             helper.setSubject(subject);
-            helper.setText(body, true); // true indicates HTML content
+            helper.setText(body+" : http://localhost:4200/questionnaire/"+String.valueOf(campaignId)+" ", true); // true indicates HTML content
             javaMailSender.send(message);
             // Save the sent email to the database for future reference
             Email email = new Email();
             email.setToEmail(to);
             email.setSubject(subject);
-            email.setBody(body);
+            email.setBody(body+" : http://localhost:4200/api/questionnaire/campaign/"+String.valueOf(campaignId));
             emailRepository.save(email);
         }
     }

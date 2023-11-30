@@ -21,7 +21,7 @@ public class CampaignService {
     public final ClientRepo clientRepo;
     public final ModelMapper modelMapper;
     public final ProductRepo productRepo;
-    public EmailService emailService;
+    public final EmailService emailService;
     public List<CampaignDTO> getAllCampaigns(){
         List<Campaign> campaigns =  campaignRepo.findAll();
         return campaigns.stream().map(c -> convertToDTO(c)).collect(Collectors.toList());
@@ -50,7 +50,7 @@ public class CampaignService {
         campaign.setStatus(CampaignStatus.Launched);
         List<String> toMails=new ArrayList<>();
         for (Client client:campaign.getClients()) toMails.add(client.getEmail());
-        emailService.sendEmailToPeople(toMails,campaign.getName(),campaign.getCampaignText());
+        emailService.sendEmailToPeople(toMails,campaignId,campaign.getName(),campaign.getCampaignText());
         return convertToDTO(campaignRepo.save(campaign));
     }
     public CampaignDTO convertToDTO(Campaign campaign){

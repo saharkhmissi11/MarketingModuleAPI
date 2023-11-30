@@ -20,6 +20,9 @@ export class CampaignComponent implements OnInit {
   campaigns:Campaign[]=[]
   products:Product[]=[]
   selectedProductId=null
+  isRequesting: boolean[] = Array(this.campaigns.length).fill(false);
+  isLaunched: boolean[] = Array(this.campaigns.length).fill(false);
+
   constructor(private campaignService:CampaignService,private productService:ProductService,private clientService:ClientService,private router: Router) { }
 
   ngOnInit(): void {
@@ -62,8 +65,13 @@ export class CampaignComponent implements OnInit {
     );
     }
   }
-  edit(campaignid:number){
-    this.router.navigate(['/campaign-targets'], { queryParams: { id: campaignid } })
+  launch(campaignId:number,index:number){
+    this.isRequesting[index] = true;
+    this.campaignService.LaunchCampaign(campaignId).subscribe(
+      (response)=>  {this.isRequesting[index] = false;this.isLaunched[index] = true},
+      (error:HttpErrorResponse)=>   this.isRequesting[index] = false
+    )
+    this.router.navigate(['/campaigns'])
   }
 
 }

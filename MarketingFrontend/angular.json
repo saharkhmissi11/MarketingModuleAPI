@@ -27,7 +27,8 @@
               "src/assets/css/bootstrap.css",
               "src/assets/css/font-awesome.css",
               "src/assets/css/basic.css",
-              "src/assets/css/custom.css"
+              "src/assets/css/custom.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": [
               "src/assets/js/jquery-1.10.2.js",

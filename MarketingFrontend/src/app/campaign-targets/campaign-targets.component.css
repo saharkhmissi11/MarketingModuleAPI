@@ -1,0 +1,56 @@
+/* Add your styles here */
+.questionnaire {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  h2{
+    font-family: Arial, sans-serif;
+  }
+  label{
+    font-size: 14px;
+  }
+ 
+  .question {
+    margin-bottom: 20px;
+  }
+  
+  .question-text {
+    font-weight: bold;
+  }
+  
+  .option-text {
+    margin-left: 20px;
+  }
+  
+  .new-question,
+  .new-options {
+    margin-top: 20px;
+  }
+  
+  .new-option {
+    margin-bottom: 10px;
+  }
+  
+
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  select {
+    /* Define width and height */
+    width: 150px;
+    padding: 8px; /* Adjust padding as needed */
+    font-size: 16px; /* Adjust font size as needed */
+    height: 50px;
+    border: 1px solid #ccc; /* Define border */
+    border-radius: 4px; /* Add border radius for rounded corners */
+    outline: none; /* Remove default focus outline */
+    /* Add additional styles like background-color, text color, etc. */
+  }
+  
+  /* Style when the select element is focused */
+  select:focus {
+    border-color: #66afe9; /* Change border color when focused */
+    box-shadow: 0 0 5px rgba(102, 175, 233, 0.6); /* Add a box shadow when focused */
+  }
+  

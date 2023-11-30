@@ -17,6 +17,9 @@ export class CampaignService {
   getCampaignById(id:number){
     return this.http.get<Campaign>(`${this.apiBaseUrl}/api/campaign/find/${id}`)
   }
+  LaunchCampaign(id:number){
+    return this.http.post<Campaign>(`${this.apiBaseUrl}/api/campaign/${id}/launch`,{})
+  }
   addCampaign(campaign:Campaign){
     return this.http.post<Campaign>(`${this.apiBaseUrl}/api/campaign/add`,campaign)
   }
