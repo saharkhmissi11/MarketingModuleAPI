@@ -1,13 +1,7 @@
 package com.Marketing.MarketingAPI.services;
-import com.Marketing.MarketingAPI.DTO.AuthenticationRequest;
-import com.Marketing.MarketingAPI.DTO.AuthenticationResponse;
-import com.Marketing.MarketingAPI.DTO.UserDTO;
-import com.Marketing.MarketingAPI.DTO.VerificationRequest;
+import com.Marketing.MarketingAPI.DTO.*;
 import com.Marketing.MarketingAPI.config.JwtService;
-import com.Marketing.MarketingAPI.models.Role;
-import com.Marketing.MarketingAPI.models.Token;
-import com.Marketing.MarketingAPI.models.TokenType;
-import com.Marketing.MarketingAPI.models.User;
+import com.Marketing.MarketingAPI.models.*;
 import com.Marketing.MarketingAPI.repositories.TokenRepository;
 import com.Marketing.MarketingAPI.repositories.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,6 +9,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -25,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -35,12 +31,11 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final TwoFactorAuthenticationService tfaService;
+    public final ModelMapper modelMapper;
     private static final Logger logger = LoggerFactory.getLogger(AuthenticationService.class);
 
     public AuthenticationResponse register(UserDTO request) {
-        //String generatedPassword = RandomStringUtils.randomAlphanumeric(8);
-        Role role = Role.valueOf(request.getRole().name().toUpperCase());
-        logger.info("Role value: {}", role);
+
         User user=User.builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
@@ -51,7 +46,7 @@ public class AuthenticationService {
                 .position(request.getPosition())
                 .imageURL(request.getImageURL())
                 .role(request.getRole())
-                .tfaEnabled(request.isTfaEnbled())
+                .tfaEnabled(request.isTfaEnabled())
                 .build();
         // if tfa is enabled -> generate a secret key for the user
         if(user.isTfaEnabled()){
@@ -95,7 +90,6 @@ public class AuthenticationService {
                 .tfaEnabled(false)
                 .build();
     }
-
     private void saveUserToken(User user, String jwtToken) {
         var token = Token.builder()
                 .user(user)
@@ -153,9 +147,18 @@ public class AuthenticationService {
             throw  new BadCredentialsException("code is not correct");
         }
         var jwtToken =jwtService.generateToken(user);
+        var refreshToken = jwtService.generateRefreshToken(user);
+        revokeAllUserTokens(user);
+        saveUserToken(user, jwtToken);
         return AuthenticationResponse.builder()
                 .tfaEnabled(user.isTfaEnabled())
                 .accessToken(jwtToken)
+                .refreshToken(refreshToken)
                 .build();
     }
+    public UserDTO findUserByTokenString(String tokenString) {
+        Optional<Token> token = tokenRepository.findByToken(tokenString);
+        return  modelMapper.map(token.map(Token::getUser).get(),UserDTO.class);
+    }
+
 }

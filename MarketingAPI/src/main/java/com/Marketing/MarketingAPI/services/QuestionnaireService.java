@@ -1,8 +1,6 @@
 package com.Marketing.MarketingAPI.services;
 
-import com.Marketing.MarketingAPI.DTO.ClientDTO;
-import com.Marketing.MarketingAPI.DTO.QuestionDTO;
-import com.Marketing.MarketingAPI.DTO.QuestionnaireDTO;
+import com.Marketing.MarketingAPI.DTO.*;
 import com.Marketing.MarketingAPI.models.*;
 import com.Marketing.MarketingAPI.repositories.CampaignRepo;
 import com.Marketing.MarketingAPI.repositories.ClientRepo;
@@ -49,7 +47,7 @@ public class QuestionnaireService {
                 .orElseThrow(() -> new EntityNotFoundException("Campaign not found with id: " + questionnaireDTO.getCampaign_id()));
         Questionnaire questionnaire = modelMapper.map(questionnaireDTO, Questionnaire.class);
         questionnaire.setCampaign(campaign);
-        List<Question> questions = questionnaireDTO.getQuestionsDTO().stream().map(q->modelMapper.map(q, Question.class)).collect(Collectors.toList());
+        List<Question> questions = questionnaireDTO.getQuestions().stream().map(q->modelMapper.map(q, Question.class)).collect(Collectors.toList());
         for (Question question : questions) {
             question.setQuestionnaire(questionnaire);
         }
@@ -62,6 +60,18 @@ public class QuestionnaireService {
                 .orElseThrow(() -> new EntityNotFoundException("Questionnaire not found for Campaign ID: " + campaignId));
         return convertToDto(questionnaire);
     }
+    public CampaignDTO getCampaignByQuestionnaireId(Long questionnaireId) {
+        Questionnaire questionnaire = questionnaireRepo.findById(questionnaireId)
+                .orElseThrow(() -> new EntityNotFoundException("Questionnaire not found with id: " + questionnaireId));
+
+        Campaign campaign = questionnaire.getCampaign();
+
+        if (campaign == null) {
+            throw new EntityNotFoundException("Campaign not found for Questionnaire ID: " + questionnaireId);
+        }
+
+        return convertCampaignToDto(campaign);
+    }
     public QuestionnaireDTO convertToDto(Questionnaire questionnaire) {
         QuestionnaireDTO questionnaireDTO = modelMapper.map(questionnaire, QuestionnaireDTO.class);
         if (questionnaire.getCampaign() != null) {
@@ -72,14 +82,22 @@ public class QuestionnaireService {
                 .map(this::convertQuestionToDto)
                 .collect(Collectors.toList());
 
-        questionnaireDTO.setQuestionsDTO(questionDTOs);
+        questionnaireDTO.setQuestions(questionDTOs);
 
         return questionnaireDTO;
     }
     private QuestionDTO convertQuestionToDto(Question question) {
         QuestionDTO questionDTO = modelMapper.map(question, QuestionDTO.class);
         questionDTO.setQuestionnaire_id(question.getQuestionnaire().getId());
+        List<ResponseDTO> responseDTOs = question.getResponses().stream()
+                .map(response -> modelMapper.map(response, ResponseDTO.class))
+                .collect(Collectors.toList());
+
+        questionDTO.setResponses(responseDTOs);
         return questionDTO;
+    }
+    private CampaignDTO convertCampaignToDto(Campaign campaign) {
+        return modelMapper.map(campaign, CampaignDTO.class);
     }
 
 

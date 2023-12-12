@@ -17,11 +17,11 @@ public enum Role {
             Permission.ADMIN_CREATE,
             Permission.ADMIN_DELETE
     )),
-    PURCHASE_MANAGER(Set.of(
-            Permission.PURCHASE_MANAGER_CREATE,
-            Permission.PURCHASE_MANAGER_DELETE,
-            Permission.PURCHASE_MANAGER_UPDATE,
-            Permission.PURCHASE_MANAGER_READ
+    MANAGER(Set.of(
+            Permission.MANAGER_CREATE,
+            Permission.MANAGER_DELETE,
+            Permission.MANAGER_UPDATE,
+            Permission.MANAGER_READ
     )),
     EMPLOYEE(Collections.emptySet())
     ;

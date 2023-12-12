@@ -28,10 +28,10 @@ public class UserController {
         return ResponseEntity.ok(userService.findAllUsers());
     }
     @PostMapping("/add")
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> registerEmployee(@RequestBody UserDTO request) {
         var response=authenticationService.register(request);
-        if(request.isTfaEnbled()){
+        if(request.isTfaEnabled()){
             return ResponseEntity.ok(response);
         }
         return ResponseEntity.accepted().build();

@@ -10,4 +10,5 @@ public class QuestionDTO {
     private String questionText;
     private List<String> options;
     private Long questionnaire_id;
+    private List<ResponseDTO> responses;
 }

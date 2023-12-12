@@ -31,7 +31,6 @@ public class ProductController {
     }
     @PostMapping("/add")
     //@PreAuthorize("hasRole('ADMIN')")
-    //User doit être désérialisé (Conversion d'un objet Json ou xml en objet Java )
     public  ResponseEntity<ProductDto> addProduct(@RequestBody ProductDto productDto, HttpServletResponse response){
         ProductDto newProduct =productService.addProduct(productDto)  ;
         return new ResponseEntity<>(newProduct,HttpStatus.CREATED );

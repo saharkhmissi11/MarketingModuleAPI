@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
+    private Long id;
     private String firstname;
     private String lastname;
     private String email;
@@ -18,5 +19,5 @@ public class UserDTO {
     private String position;
     private String imageURL;
     private Role role;
-    private boolean tfaEnbled;
+    private boolean tfaEnabled;
 }

@@ -18,7 +18,7 @@ public class QuestionnaireDTO {
     private Long id;
     private String title;
     private String description;
-    private List<QuestionDTO> questionsDTO;
+    private List<QuestionDTO> questions;
     private Long campaign_id;
 
 }

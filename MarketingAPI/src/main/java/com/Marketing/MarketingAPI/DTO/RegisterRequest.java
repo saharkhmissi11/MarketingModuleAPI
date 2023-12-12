@@ -18,4 +18,5 @@ public class RegisterRequest {
     private String position;
     private String imageURL;
     private Role role;
+    private boolean tfaEnabled;
 }

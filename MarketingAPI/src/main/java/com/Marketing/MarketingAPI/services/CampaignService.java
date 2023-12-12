@@ -10,6 +10,8 @@ import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -25,6 +27,13 @@ public class CampaignService {
     public List<CampaignDTO> getAllCampaigns(){
         List<Campaign> campaigns =  campaignRepo.findAll();
         return campaigns.stream().map(c -> convertToDTO(c)).collect(Collectors.toList());
+    }
+    public List<CampaignDTO> getAllDraftCampaigns(){
+        List<CampaignDTO> campaigns=new ArrayList<>();
+        for(CampaignDTO c:this.getAllCampaigns() ){
+            if(c.getStatus().equals(CampaignStatus.Draft)) campaigns.add(c);
+        }
+        return campaigns;
     }
     public CampaignDTO getCampaignById(Long id){
         Campaign campaign = campaignRepo.findById(id)
@@ -48,6 +57,7 @@ public class CampaignService {
     public CampaignDTO lauchCampaign(Long campaignId) throws MessagingException {
         Campaign campaign = campaignRepo.findById(campaignId).get();
         campaign.setStatus(CampaignStatus.Launched);
+        campaign.setStartDate(LocalDateTime.now());
         List<String> toMails=new ArrayList<>();
         for (Client client:campaign.getClients()) toMails.add(client.getEmail());
         emailService.sendEmailToPeople(toMails,campaignId,campaign.getName(),campaign.getCampaignText());

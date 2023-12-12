@@ -17,6 +17,10 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 
+import static com.Marketing.MarketingAPI.models.Permission.ADMIN_CREATE;
+import static com.Marketing.MarketingAPI.models.Role.ADMIN;
+import static org.springframework.http.HttpMethod.POST;
+
 
 @Configuration
 @RequiredArgsConstructor
@@ -33,7 +37,9 @@ public class SecurityConfiguration extends WebSecurityConfiguration {
                 .authorizeRequests()
                 .requestMatchers("/api/field/**").permitAll()
                 .requestMatchers("/api/client/**").permitAll()
+                .requestMatchers("/api/authentication/**").permitAll()
                 .requestMatchers("/api/questionnaire/**").permitAll()
+                .requestMatchers("/api/response/**").permitAll()
                 .requestMatchers("/api/campaign/**").permitAll()
                 .requestMatchers("/api/user/**").permitAll()
                 .requestMatchers("/api/product/**").permitAll()
