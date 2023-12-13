@@ -13,6 +13,9 @@ export class QuestionnaireService {
   addQuestionnaire(questionnaire:Questionnaire){
     return this.http.post<Questionnaire>(`${this.apiBaseUrl}/api/questionnaire/add`,questionnaire)
   }
+  addResponseToQuestion(response:Response){
+    return this.http.post<Response>(`${this.apiBaseUrl}/api/response/add`,response)
+  }
   getQuestionnaireByCampany(id:number){
     return this.http.get<Questionnaire>(`${this.apiBaseUrl}/api/questionnaire/campaign/${id}`)
   }
